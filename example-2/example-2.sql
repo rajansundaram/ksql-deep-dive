@@ -1,5 +1,4 @@
-# Join based on multiple keys
-
+# Multi column keys 
 
 CREATE STREAM my_other_stream (
     key_col STRUCT<k1 STRING, k2 BOOLEAN> KEY, v1 STRING, v2 INT 
@@ -9,7 +8,7 @@ CREATE STREAM my_other_stream (
 a join on a condition such as stream1.key_col = my_other_stream.key_col.
 
 
-
+## Creating a multi column key (Option 1)
 
 drop stream orders_multi_key;
 
@@ -42,7 +41,14 @@ INSERT INTO orders_multi_key VALUES ('abc123', '1', '101', '2020-05-01');
 select * from orders_multi_key emit changes;
 
 
+## Creating a multicolumn key ( Option 2)
+
+
+
+## Creating a multicolumn key ( Option 3)
+
 
 
 https://www.confluent.io/blog/ksqldb-0-15-reads-more-message-keys-supports-more-data-types/#multiple-key-columns
 
+https://confluent.slack.com/archives/C337JP2F8/p1657162738222339
