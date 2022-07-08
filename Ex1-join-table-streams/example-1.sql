@@ -86,4 +86,5 @@ DROP STREAM IF EXISTS ORDERS DELETE TOPIC;
 
 # References :
 https://developer.confluent.io/tutorials/multi-joins/ksql.html
+https://docs.ksqldb.io/en/latest/developer-guide/joins/join-streams-and-tables/
 
