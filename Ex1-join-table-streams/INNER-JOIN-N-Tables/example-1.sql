@@ -1,89 +1,56 @@
+CREATE TABLE items (id VARCHAR PRIMARY KEY, make VARCHAR, model VARCHAR, unit_price DOUBLE)
+WITH (KAFKA_TOPIC='items', VALUE_FORMAT='avro', PARTITIONS=1);
 
 
-# Join Multiple tables ( 3 & 4 )
-
-## Initialize the project
-CREATE TABLE customers (customerid STRING PRIMARY KEY, customername STRING)
-    WITH (KAFKA_TOPIC='customers',
-          VALUE_FORMAT='json',
-          PARTITIONS=6);
-
-CREATE TABLE items (itemid STRING PRIMARY KEY, itemname STRING)
-    WITH (KAFKA_TOPIC='items',
-          VALUE_FORMAT='json',
-          PARTITIONS=6);
-
-CREATE STREAM orders (orderid STRING KEY, customerid STRING, itemid STRING, purchasedate STRING)
-    WITH (KAFKA_TOPIC='orders',
-          VALUE_FORMAT='json',
-          PARTITIONS=6);
-
-### First some customer data:
-
-INSERT INTO customers VALUES ('1', 'Adrian Garcia');
-INSERT INTO customers VALUES ('2', 'Robert Miller');
-INSERT INTO customers VALUES ('3', 'Brian Smith');
+INSERT INTO items VALUES('item_3', 'Spalding', 'TF-150', 19.99);
+INSERT INTO items VALUES('item_4', 'Wilson', 'NCAA Replica', 29.99);
+INSERT INTO items VALUES('item_7', 'SKLZ', 'Control Training', 49.99);
 
 
-### And some items available in our store:
+DROP STREAM ny_orders;
+DROP STREAM orders;
 
-INSERT INTO items VALUES ('101', 'Television 60-in');
-INSERT INTO items VALUES ('102', 'Laptop 15-in');
-INSERT INTO items VALUES ('103', 'Speakers');
+CREATE STREAM orders (ordertime BIGINT, orderid INTEGER, itemid VARCHAR, orderunits INTEGER)
+WITH (KAFKA_TOPIC='item_orders', VALUE_FORMAT='avro', PARTITIONS=1);
 
+CREATE STREAM orders_enriched AS
+SELECT o.*, i.*, 
+	o.orderunits * i.unit_price AS total_order_value
+FROM orders o 
+JOIN items i on o.itemid = i.id;
 
-### Then we insert some orders. Each order contains a unique order id, a customer id, an item id, and a purchase date:
-
-INSERT INTO orders VALUES ('abc123', '1', '101', '2020-05-01');
-INSERT INTO orders VALUES ('abc345', '1', '102', '2020-05-01');
-INSERT INTO orders VALUES ('abc678', '2', '101', '2020-05-01');
-INSERT INTO orders VALUES ('abc987', '3', '101', '2020-05-03');
-INSERT INTO orders VALUES ('xyz123', '2', '103', '2020-05-03');
-INSERT INTO orders VALUES ('xyz987', '2', '102', '2020-05-05');
-
-
-## 
-SET 'auto.offset.reset' = 'earliest';
-
-
+INSERT INTO orders VALUES (1620501334477, 65, 'item_7', 5);
+INSERT INTO orders VALUES (1620502553626, 67, 'item_3', 2);
+INSERT INTO orders VALUES (1620503110659, 68, 'item_7', 7);
+INSERT INTO orders VALUES (1620504934723, 70, 'item_4', 1);
+INSERT INTO orders VALUES (1620505321941, 74, 'item_7', 3);
+INSERT INTO orders VALUES (1620506437125, 72, 'item_7', 9);
+INSERT INTO orders VALUES (1620508354284, 73, 'item_3', 4);
 
 
-
-## 4 Way join
-
-CREATE TABLE items_french (itemid STRING PRIMARY KEY, itemname_french STRING)
-    WITH (KAFKA_TOPIC='items_french',
-          VALUE_FORMAT='json',
-          PARTITIONS=6);
+SELECT * FROM orders_enriched EMIT CHANGES;
 
 
-INSERT INTO items_french VALUES ('101', 'Télévision 60-in');
-INSERT INTO items_french VALUES ('102', 'Portable 15-in');
-INSERT INTO items_french VALUES ('103', 'Haut-parleurs');
+CREATE TABLE items_category (id VARCHAR PRIMARY KEY, category STRING)
+WITH (KAFKA_TOPIC='items', VALUE_FORMAT='avro', PARTITIONS=1);
 
 
-### 4 way LEFT join Query
-CREATE OR REPLACE STREAM orders_enriched_bilingual AS
-  SELECT customers.customerid AS customerid, customers.customername AS customername,
-         orders.orderid, orders.purchasedate,
-         items.itemid, items.itemname, items_french.itemname_french
-  FROM orders
-  LEFT JOIN customers on orders.customerid = customers.customerid
-  LEFT JOIN items on orders.itemid = items.itemid
-  LEFT JOIN items_french on orders.itemid = items_french.itemid;
+INSERT INTO items_category VALUES('item_3', 'BasketBall');
+INSERT INTO items_category VALUES('item_4', 'BasketBall');
+INSERT INTO items_category VALUES('item_7', 'BasketBall');
 
+## NOT POSSIBLE - CHECK with #ksql
+CREATE STREAM orders_enriched_with_category AS
+SELECT o.*, i.*, ic.category 
+FROM orders o 
+JOIN items i on o.itemid = i.id 
+JOIN items_category ic on o.itemid =ic.id;
 
+#works with a second level join 
+# 3 level of join
+CREATE STREAM orders_enriched_with_category AS
+SELECT o.*, ic.category 
+FROM orders_enriched o
+JOIN items_category ic on o.O_ITEMID =ic.id;
 
-# Clean up
-### DROP TABLE [IF EXISTS] table_name [DELETE TOPIC];
-DROP TABLE IF EXISTS ITEMS DELETE TOPIC;
-DROP TABLE IF EXISTS ITEMS_FRENCH DELETE TOPIC;
-DROP TABLE IF EXISTS CUSTOMERS DELETE TOPIC;
-DROP STREAM IF EXISTS ORDERS DELETE TOPIC;
-
-
-
-
-# References :
-https://developer.confluent.io/tutorials/multi-joins/ksql.html
 
