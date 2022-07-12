@@ -1,12 +1,14 @@
 
 # Streams Join Tables ( N Way )
 
-Here are some hands-on labs to demonstrate how streams and joins can be used for joins.
+Here are some hands-on labs to demonstrate how streams and tables can be joined using ksqlDB.
 
 
 This lab is broken into INNER Join and LEFT Join.
 
+Both the examples start with 1 Streams join 1 table and ends with 1 Stream joining 2 Tables.
+
+
 Here is the official documentation for Joins [Joins in ksqlDB](https://docs.ksqldb.io/en/latest/developer-guide/joins/).
 
-Also, refer the advanced enablement deck for a quick review of important concepts [deck](https://docs.google.com/presentation/d/16Dnp4uxdzIo-9C8paP0uhJjOWvNIWb-DEbq6kw1GcRM/edit#slide=id.g125be447d3c_0_0).
 
