@@ -24,3 +24,21 @@ CREATE OR REPLACE STREAM orders_enriched_multikey AS
 INSERT INTO orders VALUES ('abc123', '1', '101', '2020-05-01');
 INSERT INTO items_multi_key_struct VALUES (STRUCT(itemid:='101',customerid:='1'),'Television 60-in'); 
 
+
+
+
+
+
+
+Here's an example code(not part of the lab) stream-stream-stream join that combines orders, payments and shipments streams. The resulting shipped_orders stream contains all orders paid within 1 hour of when the order was placed, and shipped within 2 hours of the payment being received.
+
+
+   CREATE STREAM shipped_orders AS
+     SELECT 
+        o.id as orderId,
+        o.itemid as itemId,
+        s.id as shipmentId,
+        p.id as paymentId
+     FROM orders o
+        INNER JOIN payments p WITHIN 1 HOURS ON p.id = o.id
+        INNER JOIN shipments s WITHIN 2 HOURS ON s.id = o.id;
