@@ -11,10 +11,13 @@ If you are new to ksqlDB it is recommended to start with the [official ksql trai
 
 
 
-| example   |  status  | owner  |   |   |
+| example   |  status  | owner  | proposed changes if any?  |   |
 |---|---|---|---|---|
-| joins  | done  | bjaggi  |   |   |
-| multikey strategy  | done  | bjaggi  |   |   |
+| single key joins  | done  | bjaggi  |   |   |
+| multikey strategy & joins  | done  | bjaggi  |   |   |
 | foriegn keys  |  todo | rajan  |   |   |
 | exception handling  |  done | bjaggi  |   |   |
 | materialized views  |  todo | bjaggi  |   |   |
+| windowing  |  todo | ??  |   |   |
+
+
