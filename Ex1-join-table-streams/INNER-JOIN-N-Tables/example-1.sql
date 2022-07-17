@@ -1,4 +1,7 @@
 
+SET 'auto.offset.reset' = 'earliest';
+
+
 # Create a table ITEMS
 DROP TABLE IF EXISTS items;
 CREATE TABLE items (id VARCHAR PRIMARY KEY, make VARCHAR, model VARCHAR, unit_price DOUBLE)

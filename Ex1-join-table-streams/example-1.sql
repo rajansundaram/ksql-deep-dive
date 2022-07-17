@@ -1,5 +1,9 @@
 
 
+SET 'auto.offset.reset' = 'earliest';
+
+
+
 
 ## Initialize the project with the  customer & items table  a stream
 DROP TABLE IF EXISTS customers;

@@ -1,3 +1,7 @@
+SET 'auto.offset.reset' = 'earliest';
+
+
+
 DROP STREAM IF EXISTS items_multi_key_struct ;
 
 CREATE TABLE items_multi_key_struct (myKey STRUCT<itemid STRING, customerid STRING> PRIMARY KEY, itemname STRING)

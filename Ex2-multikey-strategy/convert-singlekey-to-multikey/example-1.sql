@@ -1,5 +1,6 @@
 # Multi column keys 
 
+SET 'auto.offset.reset' = 'earliest';
 
 
 ## (Option 1) Creating a multi column key in the STREAM definition 
