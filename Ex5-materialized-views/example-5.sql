@@ -17,8 +17,6 @@ CREATE STREAM readings (
 
 
 
-
-
 INSERT INTO readings (sensor, area, reading) VALUES ('sensor-1', 'wheel', 45);
 INSERT INTO readings (sensor, area, reading) VALUES ('sensor-2', 'motor', 41);
 INSERT INTO readings (sensor, area, reading) VALUES ('sensor-1', 'wheel', 92);
