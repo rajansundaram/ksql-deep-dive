@@ -1,6 +1,8 @@
 
-# materialized views
+# materialized views (  For tables only & not streams)
 
+# A table is backed by it's changelog in a topic. A STREAM does not have a changelog.
+# There is actually a proposal to switch syntax to CREATE MATERIALIZED VIEW…
 
 
 CREATE STREAM readings (
@@ -53,7 +55,7 @@ CREATE TABLE latest_readings AS
     FROM readings
     GROUP BY sensor
     EMIT CHANGES;
-    
+
 
 https://www.confluent.io/blog/how-real-time-materialized-views-work-with-ksqldb/
 https://www.youtube.com/watch?v=WFO4CYUoIG4
