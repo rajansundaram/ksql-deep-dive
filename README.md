@@ -20,5 +20,6 @@ If you are new to ksqlDB it is recommended to start with the [official ksql trai
 | foreign keys  |  todo | rajan  |   |
 | ksqlDB Migration CLI  |  todo | ??  |   |
 | windowing  |  todo | ??  |   |
+| Performance Tuning  |  todo | ??  |   |
 
 
