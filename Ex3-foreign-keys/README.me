@@ -1,0 +1,6 @@
+Foreign-key joins can apply INNER or LEFT OUTER semantics, while primary-key joins continue to offer INNER, LEFT OUTER, and FULL OUTER behavior. Foreign-key joins cannot be used as part of a n-way join.
+This example is to test the Foregin Key joins between tables.
+
+
+Note that the ON clause uses a non-key column on the left-hand side instead of the primary key of the left input table. The result table will inherit the primary key of the left input table:
+ORDERS_WITH_USERS <ID INT PRIMARY KEY, USER_ID INT, VALUE BIGINT, U_ID INT, NAME VARCHAR, LAST_NAME VARCHAR>
