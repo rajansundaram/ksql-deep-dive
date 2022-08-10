@@ -17,9 +17,9 @@ If you are new to ksqlDB it is recommended to start with the [official ksql trai
 | multikey strategy & joins  | done  | bjaggi  |   |
 | exception handling  |  done | bjaggi  |   |
 | materialized views  |  done | bjaggi  |   |
-| foreign keys  |  todo | rajan  |   |
-| ksqlDB Migration CLI  |  todo | ??  |   |
-| windowing  |  todo | ??  |   |
+| foreign keys  |  done | rajan  |   |
+| ksqlDB Migration CLI  |  done | bjaggi  |   |
+| windowing  |  done | rajan  |   |
 | Performance Tuning  |  todo | ??  |   |
 
 
