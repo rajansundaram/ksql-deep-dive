@@ -6,4 +6,8 @@
 
 4. Sliding Window :  Time series records, to create windowed aggregations with small increments in time. This example uses hopping windows, but hopping windows aren't the best solution with small time increments. This example to show how  efficient windowed aggregations with small advances in time.
 
+Refrences : https://developer.confluent.io/tutorials/create-session-windows/ksql.html
+            https://developer.confluent.io/learn-kafka/ksqldb/intro/
+            
+
 
